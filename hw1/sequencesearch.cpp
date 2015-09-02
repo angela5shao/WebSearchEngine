@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 	}
 	cout << endl;
 
-	// input values
+	// input values (test: print them by rows)
 	for (int i=0; i<row; i++) {
 		for (int j=0; j<lens[i]; j++) {
 			input >> grid[i][j];
@@ -36,7 +36,47 @@ int main(int argc, char* argv[]) {
 	}
 	cout << endl;
 
-	
+	// for each value
+	for (int i=0; i<row; i++) {
+		for (int j=0; j<lens[i]; j++) {
+			int lenSeq = 1;
+			// find sequence up
+			if (i>=0 && i<row && j>=0 && j<lens[i]) { // if within bounds
+				// check if value above is greater
+				if (grid[i+1][j] > grid[i][j]) {
+					lenSeq++;
+				}
+			}
+			// find sequence down
+			if (i>=0 && i<row && j>=0 && j<lens[i]) { 
+				if (grid[i-1][j] > grid[i][j]) {
+					lenSeq++;
+				}
+			}
+			// find sequence left
+			if (i>=0 && i<row && j>=0 && j<lens[i]) { 
+				if (grid[i][j-1] > grid[i][j]) {
+					lenSeq++;
+				}
+			}
+			// find sequence right
+			if (i>=0 && i<row && j>=0 && j<lens[i]) {
+				cout << "checking for box to right" << endl;
+				if (grid[i][j+1] > grid[i][j]) {
+					lenSeq++;
+				}
+			}
+			cout << "grid["<<i<<"]["<<j<<"]" << endl;
+		}
+
+	}
+
+	// delete
+	delete[] lens;
+	for (int y=0; y<row; y++) {
+		delete[] grid[y];
+	}
+	delete[] grid;
 
 	return 0;
 }

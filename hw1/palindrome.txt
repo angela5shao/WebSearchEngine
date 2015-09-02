@@ -9,14 +9,15 @@ iii) c is a character, p is a palindrome, cpc
 isPalindrome(string input) 
 	parenCnt = 0
 	bracketCnt = 0
-	if (input is empty AND parenCnt == 0 AND bracketCnt == 0) {
+
+	if (input is empty AND parenCnt == 0 AND bracketCnt == 0) { // base case 1
 		return true
 	}
-	else if (input is a character AND parenCnt == 0 AND bracketCnt == 0) {
+	else if (input is a character AND parenCnt == 0 AND bracketCnt == 0) { // base case 2
 		return true
 	}
 	else {
-		char buf = first character of input
+		buf = first character of input
 
 		if (buf is a letter) {
 			isPalindrome(substring of input without first character)
