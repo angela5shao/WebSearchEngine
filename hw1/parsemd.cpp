@@ -1,29 +1,28 @@
-/* Problem 6 
-*/
+/* Problem 6 */
 
 #include <iostream>
 #include <fstream>
 using namespace std;
 
-// parses string of non () and [] characters 
-void parser(ofstream outfile, string str) {
-	//if (str == "")  // base case: if empty str, return
-		//return;
-
+/* Purpose: Takes in string, parse out non-letters, return words
+Param: string 
+Output: string
+*/
+void parser(string str) {
 	int len = str.length();
+	//if (str == "") return; // base case
+
 	for (int i=0; i<len; i++) {
-		// if char isn't letter, output string up to this char, and process string after this char
-		if (i == len-1) // if last character
-			str >> outfile;
-		else if (str[i] < 'a' || str[i] > 'z') {
-			str.substr(0,i) >> outfile;
-			parser(outfile, str.substr(i+1,len));
+		// if any char isn't a letter, print out whatever is before it and call parser for what's after
+		if (str[i] < 'a' || str[i] > 'z') {
+			cout << str.substr(0,i) << endl;
+			//parser(str.substr(i+1,len));
 		}
 	}
 }
 
 int main(int argc, char* argv[]) {
-	// read name of file 
+	// read file 
 	ifstream input(argv[1]);
 	if (input.fail()) // if file fails
 		cout << "File cannot be opened" << endl;
@@ -33,37 +32,28 @@ int main(int argc, char* argv[]) {
 	// read in inputs
 	string buf;
 	while (input >> buf) {
-		// process/parse string
 		int len = buf.length();
-/*
-		for (int i=0; i<len; i++) {
-			// if ( found
-			if (buf[0] == '(') {
-				// find )
-				for (int j=1; j<len; j++) {
-					// if empty link, output empty string
-					if (buf[j] == ')')
+		//cout << buf << endl;
+
+		// if starts with '(' or '[', output what's inside
+		if (buf[0] == '(' || buf[0] == '[') {
+			// if something is after ')' or ']', output what's inside
+			for (int i=0; i<len; i++) {
+				if (buf[i] == ')' || buf[i] == ']') {
+					cout << buf.substr(1,i) << endl;
 				}
-				// if ) isn't last character, output whatever is after separately
-			}
-			else if (buf[0] == '[') {  // else if [ found
-				// find ]
-			} 
-			else if (buf[0] < 'a' || buf[0] > 'z') { // else if not letter
-				// skip the letter and output whatever is after separately
-			} 
-			else {
-				// output
 			}
 		}
-*/
+
+		// else: check for non-letters
+		else {
+			// if reach non-letter, print what's before
+			for (int i=0; i<len; i++) {
+				if (buf[i] < 'a' || buf[i] > 'z') { // ** CHECK FOR CAPITALS TOO ** */
+					cout << buf.substr(0,i) << endl;
+				}
+			}
+		}
 
 	}
-
-
-
-	// output into a file (only letters, (), and [])
-
-	// for links: if missing text or link, output empty string
-
 }
