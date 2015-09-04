@@ -8,8 +8,12 @@ rd
 semester
 at
 LINK (www.usc.edu)., USC)
+USC](www.usc.edu).
 Parsing
 text
 is
 part
 of
+Assignment
+text
+anotherText

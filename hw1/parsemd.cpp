@@ -60,11 +60,11 @@ void outputLink(string str, ofstream &output) {
 Param: string, including [] and ()
 Output: LINK (content, anchor_text)
 */
-void outputLinkWithAnchor(string str, ofstream &output) {
+void outputLinkWithAnchor(string str, ofstream &output, ifstream &input) {
 	int len = str.length();
 	string anchor;
 	int indexOpenParen;
-	
+	//cout << "entering" << str << endl;
 	for (int i=1; i<len; i++) {
 		// find ']' and see if '(' follows
 		if (str[i] == ']') {
@@ -77,11 +77,10 @@ void outputLinkWithAnchor(string str, ofstream &output) {
 			else {
 				//cout << str.substr(1,i-1) << endl;
 				output << str.substr(1,i-1) << endl;
-				break;
+				//break;
 			}
 		}
-		// find ')'
-		if (str[i] == ')') {
+		else if (str[i] == ')') { // find ')'
 			string buf = str.substr(indexOpenParen + 1, i);
 			//cout << "LINK (" << buf << ", " << anchor << ")" << endl;
 
@@ -92,6 +91,21 @@ void outputLinkWithAnchor(string str, ofstream &output) {
 			if (i != len-1) {
 				parser(str.substr(i+1,len), output);
 			}
+		} else if (i==len-1) { // has no ']', print what's after 
+			output << str.substr(1,len) << endl;
+
+			string temp;
+			input >> temp;
+			parser(temp, output);
+
+			// process 
+			/*
+			int lenT = temp.length();
+			for (int t=0; t<lenT; t++) {
+				if (temp[t] == ']') {
+					output << str.substr(1,len) + temp.substr(0,t) << endl;
+				}
+			}*/
 		}
 	}
 }
@@ -113,11 +127,12 @@ int main(int argc, char* argv[]) {
 		if (buf[0] == '(') { // if starts with '(', call outputLink
 			outputLink(buf, output);
 		} else if (buf[0] == '[') { // else if starts with '[', call outputLinkWithAnchor
-			outputLinkWithAnchor(buf, output);
+			outputLinkWithAnchor(buf, output, input);
 		} else { // else, call parser
 			parser(buf, output);
 		}
 	}
+	//output << "\n";
 
 	// close output file
 	output.close();
