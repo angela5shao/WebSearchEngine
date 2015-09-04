@@ -1,4 +1,4 @@
-/* Problem 6 */
+/* Problem 6: Parsing */
 
 #include <iostream>
 #include <fstream>
@@ -19,7 +19,7 @@ void parser(string str, ofstream &output) {
 		if (x < 'A' || (x > 'Z' && x < 'a') || x > 'z') {
 			// if not first character
 			if (i != 0) {
-				cout << str.substr(0,i) << endl;
+				//cout << str.substr(0,i) << endl;
 				output << str.substr(0,i) << endl;
 			}
 			parser(str.substr(i+1, len), output);
@@ -27,7 +27,7 @@ void parser(string str, ofstream &output) {
 		}
 		// if entire string are letters
 		if (i==len-1) {
-			cout << str << /*" (normal)" << */endl;
+			//cout << str << /*" (normal)" << */endl;
 			output << str << endl;
 		}
 	}
@@ -43,7 +43,7 @@ void outputLink(string str, ofstream &output) {
 	for (int i=1; i<len; i++) {
 		if (str[i] == ')') {
 			string buf = str.substr(1,i-1);
-			cout << "LINK (" << buf << ", " << buf << ")";
+			//cout << "LINK (" << buf << ", " << buf << ")" << endl;
 
 			string temp = "LINK (" + buf + " " + buf + ")";
 			output << temp << endl;
@@ -75,7 +75,7 @@ void outputLinkWithAnchor(string str, ofstream &output) {
 			}
 			// else, print content
 			else {
-				cout << /*" (no link) " <<*/ str.substr(1,i-1) << endl;
+				//cout << str.substr(1,i-1) << endl;
 				output << str.substr(1,i-1) << endl;
 				break;
 			}
@@ -83,7 +83,7 @@ void outputLinkWithAnchor(string str, ofstream &output) {
 		// find ')'
 		if (str[i] == ')') {
 			string buf = str.substr(indexOpenParen + 1, i);
-			cout << "LINK (" << buf << ", " << anchor << ")" << endl;
+			//cout << "LINK (" << buf << ", " << anchor << ")" << endl;
 
 			string temp = "LINK (" + buf + ", " + anchor + ")";
 			output << temp << endl;
