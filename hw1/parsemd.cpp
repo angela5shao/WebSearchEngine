@@ -19,7 +19,6 @@ void parser(string str, ofstream &output) {
 		if (x < 'A' || (x > 'Z' && x < 'a') || x > 'z') {
 			// if not first character
 			if (i != 0) {
-				//cout << str.substr(0,i) << endl;
 				output << str.substr(0,i) << endl;
 			}
 			parser(str.substr(i+1, len), output);
@@ -27,7 +26,6 @@ void parser(string str, ofstream &output) {
 		}
 		// if entire string are letters
 		if (i==len-1) {
-			//cout << str << /*" (normal)" << */endl;
 			output << str << endl;
 		}
 	}
@@ -43,7 +41,6 @@ void outputLink(string str, ofstream &output) {
 	for (int i=1; i<len; i++) {
 		if (str[i] == ')') {
 			string buf = str.substr(1,i-1);
-			//cout << "LINK (" << buf << ", " << buf << ")" << endl;
 
 			string temp = "LINK (" + buf + ", " + buf + ")";
 			output << temp << endl;
@@ -63,8 +60,7 @@ Output: LINK (content, anchor_text)
 void outputLinkWithAnchor(string str, ofstream &output, ifstream &input) {
 	int len = str.length();
 	string anchor;
-	int indexOpenParen;
-	//cout << "entering" << str << endl;
+	int indexOpenParen=0;
 	for (int i=1; i<len; i++) {
 		// find ']' and see if '(' follows
 		if (str[i] == ']') {
@@ -75,37 +71,27 @@ void outputLinkWithAnchor(string str, ofstream &output, ifstream &input) {
 			}
 			// else, print content
 			else {
-				//cout << str.substr(1,i-1) << endl;
-				output << str.substr(1,i) << endl;
-				//break;
+				output << str.substr(1,i-1) << endl;
 			}
 		}
 		else if (str[i] == ')') { // find ')'
 			string buf = str.substr(indexOpenParen + 1, i);
-			//cout << "LINK (" << buf << ", " << anchor << ")" << endl;
+			output << "..after ).. " << str.substr(indexOpenParen+1,i-1) << endl;
 
 			string temp = "LINK (" + buf + ", " + anchor + ")";
 			output << temp << endl;
 
 			// if ')' isn't end of str, call parser for what's after ')'
 			if (i != len-1) {
+				//cout << str.substr(i+1, len) << endl;
 				parser(str.substr(i+1,len), output);
 			}
 		} else if (i==len-1) { // has no ']', print what's after 
-			output << str.substr(1,len) << endl;
+			//output << str.substr(i,len) << endl;
 
 			string temp;
 			input >> temp;
 			parser(temp, output);
-
-			// process 
-			/*
-			int lenT = temp.length();
-			for (int t=0; t<lenT; t++) {
-				if (temp[t] == ']') {
-					output << str.substr(1,len) + temp.substr(0,t) << endl;
-				}
-			}*/
 		}
 	}
 }
