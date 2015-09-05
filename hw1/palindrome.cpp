@@ -16,6 +16,7 @@ int main(int argc, char* argv[]) {
 
   ofstream ofile(argv[1]);
   int len = atoi(argv[3]);
+
   makePalindromes(ofile, argv[2], len);
   ofile.close();
   return 0;
@@ -46,11 +47,11 @@ void makePalindromes(ofstream& ofile, char* options, int size) {
 		ofile << orig << endl;
 	}
 	else {
+		ofile << endl;
 		// for each char in orig
 		for (int i=0; i<len; i++) {
 			// for strings of odd length
 			string temp1 = "";
-			ofile << temp1 << endl;
 			temp1 = temp1 + orig[i];
 			ofile << temp1 << endl;
 			addToEnds(ofile, temp1, orig, size);

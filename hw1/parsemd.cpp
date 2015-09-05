@@ -45,7 +45,7 @@ void outputLink(string str, ofstream &output) {
 			string buf = str.substr(1,i-1);
 			//cout << "LINK (" << buf << ", " << buf << ")" << endl;
 
-			string temp = "LINK (" + buf + " " + buf + ")";
+			string temp = "LINK (" + buf + ", " + buf + ")";
 			output << temp << endl;
 
 			// if ')' isn't end of str, call parser for what's after ')'
@@ -76,7 +76,7 @@ void outputLinkWithAnchor(string str, ofstream &output, ifstream &input) {
 			// else, print content
 			else {
 				//cout << str.substr(1,i-1) << endl;
-				output << str.substr(1,i-1) << endl;
+				output << str.substr(1,i) << endl;
 				//break;
 			}
 		}
@@ -132,7 +132,6 @@ int main(int argc, char* argv[]) {
 			parser(buf, output);
 		}
 	}
-	//output << "\n";
 
 	// close output file
 	output.close();

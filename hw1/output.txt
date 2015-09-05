@@ -1,7 +1,7 @@
 Writing
 my
 own
-LINK (www.google.com www.google.com)
+LINK (www.google.com, www.google.com)
 in
 my
 rd
