@@ -11,3 +11,6 @@ b)
   1. git add hw1q2b.cpp
   2. git log -3
 c) When committing code in git, the system requires a commit message. If a message is not provided via the commandline, git will launch the Operating System's default text editor prompting you for a message.
+
+
+.IGNORE
