@@ -1,17 +1,13 @@
 Problem 1:
-a) 3,5, 
-b) 1,2,4,6
-c) 
+a) 1,3,5, 
+b) 1,2,4,5
+c) 2
 d) 2,3
-e) 
+e) 1
 
 Problem 2:
 a) 1,3
 b) 
   1. git add hw1q2b.cpp
-     git commit -m "Initial commit"
-  2. git log
-c) 
-
-Problem 3:
-
+  2. git log -3
+c) When committing code in git, the system requires a commit message. If a message is not provided via the commandline, git will launch the Operating System's default text editor prompting you for a message.
