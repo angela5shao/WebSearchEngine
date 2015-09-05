@@ -76,19 +76,16 @@ void outputLinkWithAnchor(string str, ofstream &output, ifstream &input) {
 		}
 		else if (str[i] == ')') { // find ')'
 			string buf = str.substr(indexOpenParen + 1, i);
-			output << "..after ).. " << str.substr(indexOpenParen+1,i-1) << endl;
+			output << "..after ).. " << str.substr(indexOpenParen+1,i) << endl;
 
 			string temp = "LINK (" + buf + ", " + anchor + ")";
 			output << temp << endl;
 
 			// if ')' isn't end of str, call parser for what's after ')'
 			if (i != len-1) {
-				//cout << str.substr(i+1, len) << endl;
 				parser(str.substr(i+1,len), output);
 			}
 		} else if (i==len-1) { // has no ']', print what's after 
-			//output << str.substr(i,len) << endl;
-
 			string temp;
 			input >> temp;
 			parser(temp, output);
@@ -108,8 +105,6 @@ int main(int argc, char* argv[]) {
 	// read in inputs
 	string buf;
 	while (input >> buf) {
-		//cout << buf << endl;
-
 		if (buf[0] == '(') { // if starts with '(', call outputLink
 			outputLink(buf, output);
 		} else if (buf[0] == '[') { // else if starts with '[', call outputLinkWithAnchor
