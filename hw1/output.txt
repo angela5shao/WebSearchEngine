@@ -1,3 +1,0 @@
-..after ).. google.com)
-LINK (google.com), text)
-textNoLink
