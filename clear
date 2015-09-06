@@ -1,0 +1,72 @@
+[33mcommit 2cf36f4c8640771611cf49bc2b08dee77e66795d[m
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Thu Sep 3 14:59:46 2015 -0700
+
+    parsemd can parse special characters and strings with just link
+
+[33mcommit ae1ad2b660c904d34a593dfce3e6d5a677224a6f[m
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Thu Sep 3 11:37:21 2015 -0700
+
+    update parsemd to parse out special characters and updated sequencesearch to find all sequences
+
+[33mcommit 1842c6b57b549aa1438dc986023deb255a183d15[m
+Merge: bdaf1b6 a216e09
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Wed Sep 2 15:43:42 2015 -0700
+
+    Merge branch 'master' of github.com:usc-csci104-fall2015/hw_annchies
+
+[33mcommit bdaf1b6e17b51766ff40950b2e6004c78d5060de[m
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Wed Sep 2 15:42:10 2015 -0700
+
+    commit test
+
+[33mcommit 81b56ae2e648c93236ee79c5b759431f13b58dda[m
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Tue Sep 1 23:31:26 2015 -0700
+
+    1st upload of hw1 folder
+
+[33mcommit a216e0977496f87fc60acbdcb16d158d82b73a6c[m
+Author: Ann-Chie Shao <angela5shao@users.noreply.github.com>
+Date:   Mon Aug 31 13:50:06 2015 -0700
+
+    Delete hw1
+
+[33mcommit e42e76202517d86160949aa24368cf1eba1bef31[m
+Author: Ann-Chie Shao <angela5shao@users.noreply.github.com>
+Date:   Mon Aug 31 13:49:44 2015 -0700
+
+    Create hw1
+
+[33mcommit 788608eccccf371c23da8fc6c56ca377ffd5a1ec[m
+Author: Ann-Chie Shao <angela5shao@users.noreply.github.com>
+Date:   Tue Aug 25 16:55:57 2015 -0700
+
+    Create .gitignore
+
+[33mcommit b20635354595e576ab6f0422bee63a69deee49a3[m
+Author: Ann-Chie Shao <angela5shao@users.noreply.github.com>
+Date:   Tue Aug 25 16:47:47 2015 -0700
+
+    Update HelloWorld.cpp
+
+[33mcommit e54a4ef1b7680271784d0c3c49f9b834e25cda48[m
+Author: Ann-Chie Shao <annchies@usc.edu>
+Date:   Tue Aug 25 16:44:40 2015 -0700
+
+    My first HelloWorld using git
+
+[33mcommit 4ab6a6da3ecc02cda287e0cd9d65e39775afb842[m
+Author: angela5shao <angela5shao@users.noreply.github.com>
+Date:   Tue Aug 25 16:29:32 2015 -0700
+
+    Create README.md
+
+[33mcommit a56daa20ba76b22ffaf7bf1ccb494ca98d98377d[m
+Author: colortheskyjade <fading.jade@gmail.com>
+Date:   Tue Aug 25 11:49:36 2015 -0700
+
+    Initial commit
