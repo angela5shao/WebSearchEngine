@@ -1,0 +1,18 @@
+Problem 1:
+a) 
+b) modified
+c) README.md is modified; fun_problem.txt is new file
+d) both are modified
+e) README.md is modified (and staged)
+	content of fun_problem.txt is empty, because...
+
+
+Problem 3:
+a) O(n^2)
+b) O(n)
+c) O(n^(3/2))
+
+Problem 4:
+1. a set of strings, because it doesn't matter what the order they are in; we only need to insert, remove, and check if the set contains a certain string
+2. a map of string keys (student name) and string values (classes)
+3. a list, because order matters
