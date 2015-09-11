@@ -13,28 +13,23 @@ param: pointers to list "in", "smaller", "larger", and int pivot
 return: none
 */
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
-	Node* curr = in;
-	if (curr == NULL) {
-		smaller->next = NULL;
-		larger->next = NULL;
+	if (in == NULL) {
+		smaller = NULL;
+		larger = NULL;
 	} else {
-		Node* newNode = new Node; // create new node
-		if (curr->value <= pivot) {
-			smaller->value = curr->value; // add new node to smaller list
-			smaller->next = newNode;
-
-			// delete current Node
-			Node* next = curr->next;
-			delete curr;
-			split (next, smaller->next, larger, pivot);
-		} else { 
-			larger->value = curr->value;
-			larger->next = newNode;
-
-			// delete current Node
-			Node* next = curr->next;
-			delete curr;
-			split (next, smaller, larger->next, pivot);
+		cout << "taking in: " << in->value;
+		if (in->value <= pivot) {
+			cout << "  smaller.." << endl;
+			if (smaller == NULL) {
+				smaller = in;
+			} else {
+				smaller->next = in;
+			}
+			split(in->next, smaller->next, larger, pivot);
+		} 
+		else { 
+			cout << "  larger.." << endl;
+			split(in->next, smaller, larger, pivot);
 		}
 	}
 	
@@ -60,11 +55,18 @@ int main(int argc, char* argv[]) {
 	Node* smaller = NULL; //new Node;
 	Node* larger = NULL;//new Node;
 	int pivot = 10;
-	split (head, smaller, larger, pivot);
 
+	cout << "setting:" << endl;
+	smaller = myNode;
+	//smaller->value = 0;
+	cout << "value: " << smaller->value << endl;
+
+	
+	//split (head, smaller, larger, pivot);
+/*
 // TESTING
 	cout << "\nsmaller list: " << endl;
-	while (smaller->next) {
+	while (smaller) {
 		cout << smaller->value << " ";
 		smaller = smaller->next;
 	} 
@@ -73,7 +75,7 @@ int main(int argc, char* argv[]) {
 	while (larger->next) {
 		cout << larger->value << " ";
 		larger = larger->next;
-	} 
+	} */
 
 	return 0;
 }
