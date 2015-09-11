@@ -15,36 +15,29 @@ return: none
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 	Node* curr = in;
 	if (curr == NULL) {
-		smaller = NULL;
-		larger = NULL;
+		smaller->next = NULL;
+		larger->next = NULL;
 	} else {
-		if (in->value <= pivot) {
-			/*Node* next = curr->next; // save next Node of curr
-			smaller->value = curr->value; // set smallerNode to currNode
-			*/
-			Node* next = in->next;
-			if (smaller == NULL) {
-				smaller->value = in->value;
-			} else {
-				smaller->next = in;
-				smaller = smaller->next;
-			}
-			//delete in;
-			//curr = NULL;
-			split(next, smaller, larger, pivot);
+		Node* newNode = new Node; // create new node
+		if (curr->value <= pivot) {
+			smaller = new Node;
+			smaller->value = curr->value; // add new node to smaller list
+			smaller->next = newNode;
 
-
-			//smaller->next = NULL;
-			//delete curr;
-			//curr = NULL;
-			//split (next, next, larger, pivot);
-		} /*else { 
+			// delete current Node
 			Node* next = curr->next;
-			larger->next = curr;
-			//delete curr;
-			//curr = NULL;
+			delete curr;
+			split (next, smaller->next, larger, pivot);
+		} else { 
+			larger = new Node;
+			larger->value = curr->value;
+			larger->next = newNode;
+
+			// delete current Node
+			Node* next = curr->next;
+			delete curr;
 			split (next, smaller, larger->next, pivot);
-		}*/
+		}
 	}
 	
 }
@@ -83,5 +76,6 @@ int main(int argc, char* argv[]) {
 		cout << larger->value << " ";
 		larger = larger->next;
 	} 
+
 	return 0;
 }
