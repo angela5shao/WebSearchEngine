@@ -10,34 +10,33 @@ struct Node {
 
 /* Purpose: splits list "in" to smaller list for elements <= pivot and larger list for elements > pivot
 param: pointers to list "in", "smaller", "larger", and int pivot
-return: none
 */
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
-	Node* curr = in;
-	if (curr == NULL) {
-		smaller->next = NULL;
-		larger->next = NULL;
-	} else {
-		Node* newNode = new Node; // create new node
-		if (curr->value <= pivot) {
-			smaller->value = curr->value; // add new node to smaller list
-			smaller->next = newNode;
-
-			// delete current Node
-			Node* next = curr->next;
-			delete curr;
-			split (next, smaller->next, larger, pivot);
-		} else { 
-			larger->value = curr->value;
-			larger->next = newNode;
-
-			// delete current Node
-			Node* next = curr->next;
-			delete curr;
-			split (next, smaller, larger->next, pivot);
-		}
+	// base case
+	if (in == NULL) {
+		smaller = NULL;
+		larger = NULL;
+		return;
 	}
-	
+
+	if (in->value <= pivot) {
+		//cout << "svalue: " << in->value << endl;
+		smaller = in; // set ptr smaller to ptr in
+		split(in->next, smaller->next, larger, pivot);
+		/*
+		if (smaller == NULL) {
+			smaller = in;
+		} else {
+			smaller->next = in;
+			smaller = smaller->next;
+		}
+		split(in->next, smaller, larger, pivot);*/
+
+	} else {
+		//cout << "lvalue: " << in->value << endl;
+		larger = in; // set ptr smaller to ptr in
+		split(in->next, smaller, larger->next, pivot);
+	}
 }
 
 int main(int argc, char* argv[]) {
@@ -45,35 +44,42 @@ int main(int argc, char* argv[]) {
 	Node* head = myNode;
 
 	srand(time(0));
-	for (int i=0; i<6; i++) {
+	for (int i=0; i<3; i++) {
 		myNode->value = rand() % 20;
+
 		Node* newNode = new Node;
 		myNode->next = newNode;
 		myNode = myNode->next;
 	}
 
-	myNode = NULL;
-	for (Node *p = head; p->next != NULL; p=p->next) {
+	for (Node *p = head; p != NULL; p=p->next) {
 		cout << p->value << endl;	
 	}
 
-	Node* smaller = NULL; //new Node;
-	Node* larger = NULL;//new Node;
+	Node* smaller = NULL;
+	Node* larger = NULL;
 	int pivot = 10;
 	split (head, smaller, larger, pivot);
 
-// TESTING
-	cout << "\nsmaller list: " << endl;
-	while (smaller->next) {
-		cout << smaller->value << " ";
-		smaller = smaller->next;
-	} 
 
-	cout << "\nlarger list: " << endl;
-	while (larger->next) {
-		cout << larger->value << " ";
-		larger = larger->next;
-	} 
+
+	// TEST: psint smaller & larger lists
+	cout << "smaller list: ";
+	for (Node *s = smaller; s != NULL; s=s->next) 
+		cout << s->value << " ";
+	cout << endl;
+
+	cout << "larger list: ";
+	for (Node *l = larger; l != NULL; l=l->next) 
+		cout << l->value << " ";
+	cout << endl;
+
+
+
+	// delete dynamic memory
+	for (Node *q = head; q != NULL; q=q->next) {
+		delete q;
+	}
 
 	return 0;
 }
