@@ -74,4 +74,5 @@ class LListInt {
   int size_;
 };
 
+#include "llistint.cpp"
 #endif

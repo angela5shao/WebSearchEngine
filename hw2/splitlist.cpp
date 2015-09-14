@@ -37,6 +37,7 @@ void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 		larger = in; // set ptr smaller to ptr in
 		split(in->next, smaller, larger->next, pivot);
 	}
+	//in = NULL;
 }
 
 int main(int argc, char* argv[]) {
@@ -74,6 +75,7 @@ int main(int argc, char* argv[]) {
 		cout << l->value << " ";
 	cout << endl;
 
+	cout << "myNode: " << myNode->value << endl;
 
 
 	// delete dynamic memory
