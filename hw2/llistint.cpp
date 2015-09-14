@@ -95,14 +95,6 @@ void LListInt::remove(int loc) {
     delete ItemToRem; // delete
   }
   size_--; // update size (supposedly 0)
-
-  /*Item* p = head_;
-  // traverse list to Item at loc
-  for (int i=0; i<loc; i++) { 
-    if (p->next != NULL) { // check if loc is valid; 0 to SIZE, inclusive
-      p=p->next;
-    } else return;
-  }*/
 }
 
 void LListInt::set(int loc, const int& val) {

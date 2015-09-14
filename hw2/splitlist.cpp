@@ -12,6 +12,7 @@ struct Node {
 param: pointers to list "in", "smaller", "larger", and int pivot
 */
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
+	//Node* const head = in;
 	// base case
 	if (in == NULL) {
 		smaller = NULL;
@@ -20,39 +21,48 @@ void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 	}
 
 	if (in->value <= pivot) {
-		//cout << "svalue: " << in->value << endl;
 		smaller = in; // set ptr smaller to ptr in
-		split(in->next, smaller->next, larger, pivot);
-		/*
-		if (smaller == NULL) {
-			smaller = in;
-		} else {
-			smaller->next = in;
-			smaller = smaller->next;
-		}
-		split(in->next, smaller, larger, pivot);*/
-
+		Node* next= in->next;
+		in = NULL;
+		split(next, smaller->next, larger, pivot);
 	} else {
-		//cout << "lvalue: " << in->value << endl;
 		larger = in; // set ptr smaller to ptr in
-		split(in->next, smaller, larger->next, pivot);
+		/*if (larger == NULL) {
+			Node* next = in->next;
+			in = NULL;
+			split(next, smaller, larger->next, pivot);
+		} else {
+			split(in->next, smaller, larger->next, pivot);
+		}*/
+		Node* next= in->next;
+		in = NULL;
+		split(next, smaller, larger->next, pivot);
 	}
-	//in = NULL;
 }
 
 int main(int argc, char* argv[]) {
-	Node* myNode = new Node;
-	Node* head = myNode;
+	//Node* myNode = new Node;
+	Node* head = NULL;
+	Node* curr = NULL;
 
+	// fill list
 	srand(time(0));
+
 	for (int i=0; i<3; i++) {
-		myNode->value = rand() % 20;
-
+		// create new Node
 		Node* newNode = new Node;
-		myNode->next = newNode;
-		myNode = myNode->next;
-	}
+		newNode->value = rand() % 20;
 
+		// if it's the first Node (head), set head to it
+		if (i == 0) {
+			head = newNode;
+			curr = head;
+		} else {
+			curr->next = newNode;
+			curr = curr->next;
+		}
+	}
+	// print list
 	for (Node *p = head; p != NULL; p=p->next) {
 		cout << p->value << endl;	
 	}
@@ -64,7 +74,7 @@ int main(int argc, char* argv[]) {
 
 
 
-	// TEST: psint smaller & larger lists
+	// TEST: print smaller & larger lists
 	cout << "smaller list: ";
 	for (Node *s = smaller; s != NULL; s=s->next) 
 		cout << s->value << " ";
@@ -75,7 +85,11 @@ int main(int argc, char* argv[]) {
 		cout << l->value << " ";
 	cout << endl;
 
-	cout << "myNode: " << myNode->value << endl;
+	if (head == NULL) {
+		cout << "SUCCESS: head = NULL" << endl;
+	} else {
+		cout << "FAIL: head isn't NULL, value = " << head->value << endl;
+	}
 
 
 	// delete dynamic memory
