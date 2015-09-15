@@ -8,11 +8,21 @@ e) README.md is modified (and staged)
 
 
 Problem 3:
-a) O(n^2)
-b) O(n) NOOOOOO!!!!!!!!! ------------------------------------
-c) O(n^(3/2))
+a) inner for loop: O(n)
+	outer for loop: O(n)
+	overall: O(n^2)
+b) 
+	for the inner for loop: size = 10*(2/3)^n = O((2/3)^n)
+		runtime: sum(n=0 to log(base 2/3)size) * O(size) 
+			= O(log(size)/log(2/3) * size)
+			= O(n * (2/3)^n)
+	for the outer for loop: O(n)
+	Thus for overall: O(n * n * (2/3)^n) = O(n^2 * (2/3)^n)
+c) inner for loop: size = 10 + n*sqrt(n) = O(n^1.5)
+	outer for loop: O(n)
+	overall: O(n * n^1.5) = O(n^2.5)
 
 Problem 4:
-1. a set of strings, because it doesn't matter what the order they are in; we only need to insert, remove, and check if the set contains a certain string
+1. a set of strings, because the order they are in doesn't matter; we only need to insert, remove, and check if the set contains a certain string
 2. a map of string keys (student name) and string values (classes)
-3. a list, because order matters
+3. a list of strings (country names), because order matters

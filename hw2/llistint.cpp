@@ -1,5 +1,4 @@
 /* Problem 6: implement doubly-linked list
-
 */
 #include "llistint.h"
 #include <cstdlib>
