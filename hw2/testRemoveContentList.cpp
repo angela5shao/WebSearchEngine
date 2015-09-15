@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
     cout << "SUCCESS: List has size 0 after removal of nonexistent Item." << endl;
   } else {
     cout << "FAIL: List has size " << list->size() << " after incorrect removal.";
+  }
 
   // Insert an item at the head.
   list->insert(0, 3);

@@ -32,6 +32,11 @@ void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 	}
 }
 
+
+
+
+
+/* FOR TESTING
 int main(int argc, char* argv[]) {
 	//Node* myNode = new Node;
 	Node* head = NULL;
@@ -86,4 +91,4 @@ int main(int argc, char* argv[]) {
 	}
 
 	return 0;
-}
+}*/
