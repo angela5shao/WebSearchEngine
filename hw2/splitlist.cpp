@@ -12,7 +12,6 @@ struct Node {
 param: pointers to list "in", "smaller", "larger", and int pivot
 */
 void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
-	//Node* const head = in;
 	// base case
 	if (in == NULL) {
 		smaller = NULL;
@@ -27,13 +26,6 @@ void split (Node*& in, Node*& smaller, Node*& larger, int pivot) {
 		split(next, smaller->next, larger, pivot);
 	} else {
 		larger = in; // set ptr smaller to ptr in
-		/*if (larger == NULL) {
-			Node* next = in->next;
-			in = NULL;
-			split(next, smaller, larger->next, pivot);
-		} else {
-			split(in->next, smaller, larger->next, pivot);
-		}*/
 		Node* next= in->next;
 		in = NULL;
 		split(next, smaller, larger->next, pivot);
@@ -44,7 +36,6 @@ int main(int argc, char* argv[]) {
 	//Node* myNode = new Node;
 	Node* head = NULL;
 	Node* curr = NULL;
-
 	// fill list
 	srand(time(0));
 
@@ -52,7 +43,6 @@ int main(int argc, char* argv[]) {
 		// create new Node
 		Node* newNode = new Node;
 		newNode->value = rand() % 20;
-
 		// if it's the first Node (head), set head to it
 		if (i == 0) {
 			head = newNode;
@@ -73,7 +63,6 @@ int main(int argc, char* argv[]) {
 	split (head, smaller, larger, pivot);
 
 
-
 	// TEST: print smaller & larger lists
 	cout << "smaller list: ";
 	for (Node *s = smaller; s != NULL; s=s->next) 
@@ -90,7 +79,6 @@ int main(int argc, char* argv[]) {
 	} else {
 		cout << "FAIL: head isn't NULL, value = " << head->value << endl;
 	}
-
 
 	// delete dynamic memory
 	for (Node *q = head; q != NULL; q=q->next) {

@@ -14,19 +14,19 @@ int main(int argc, char* argv[]) {
   }
 
   list->remove(0);
-  cout << "size after incorrect remove of empty list: " << list->size() << endl;
+  if (list->size() == 0) {
+    cout << "SUCCESS: List has size 0 after removal of nonexistent Item." << endl;
+  } else {
+    cout << "FAIL: List has size " << list->size() << " after incorrect removal.";
 
   // Insert an item at the head.
   list->insert(0, 3);
-
   if (list->size() == 1) {
     cout << "SUCCESS: List has size 1 after one insertion." << endl;
   } else {
     cout << "FAIL: List has size " << list->size() << " after one insertion.";
     cout << endl;
-    cout << endl;
   }
-
   // Check if the value is correct.
   if (list->get(0) == 3) {
     cout << "SUCCESS: 3 is at the 0th index of the list." << endl;
@@ -35,31 +35,18 @@ int main(int argc, char* argv[]) {
     cout << " is instead." << endl;
   }
 
-  list->remove(1);
-
-  // Check if the list is empty.
-  if (list->empty()) {
-    cout << "FAIL: List is empty after removing nonexistent Item." << endl;
-  } else {
-    cout << "SUCCESS: List is not empty after removal of nonexistent Item." << endl;
-  }
-  cout << "size after removal of nonexistent Item: " << list->size() << endl;
-
-
-  list->insert(1,10);
-  cout << "size after inserting Item: " << list->size() << endl;
-  if (list->get(1) == 10) {
-    cout << "SUCCESS: 10 is at 1st index of the list." << endl;
-  } else {
-    cout << "FAIL: 10 is not at the 1st index of the list, " << list->get(1) << " is instead" << endl;
-  }
-
+  list->insert(1, 10);
   if (list->size() == 2) {
     cout << "SUCCESS: List has size 2 after one insertion." << endl;
   } else {
     cout << "FAIL: List has size " << list->size() << " after one insertion.";
     cout << endl;
     cout << endl;
+  }
+  if (list->get(1) == 10) {
+    cout << "SUCCESS: 10 is at 1st index of the list." << endl;
+  } else {
+    cout << "FAIL: 10 is not at the 1st index of the list, " << list->get(1) << " is instead" << endl;
   }
 
 

@@ -15,26 +15,18 @@ void parse(string input, set<string> &myset) {
 	// BASE: input is empty
 	if (input.empty()) return;
 
-	cout << ".." << input << endl;
-
 	int lenInput = input.length();
 	// loop thru each char in input
 	for (int i=0; i<lenInput; i++) {
-		//input[i] = toLower(input[i]); // convert input to lowercase
+		input[i] = tolower(input[i]); // convert input to lowercase
 		// when non-letter reached, input what's before into set
-		//cout << "  input[" << i << "]: " << input[i] << endl;
 		if (input[i] < 'A' || (input[i] > 'Z' && input[i] < 'a') || input[i] > 'z') {
 			myset.insert(input.substr(0,i));
-			//cout << "  size after inserting "<< input.substr(0,i) << ": " << myset.size() << endl;
-			//cout << "  calling parse on " << input.substr(i+1, lenInput) << endl;
 			parse(input.substr(i+1, lenInput), myset);
 			return;
 		} 
 	}
-	//cout << "  reached end of string " << endl;
 	myset.insert(input);
-	//cout << "  size after inserting " << input << ": " << myset.size() << endl;
-	//cout << "  ----END----\n" << endl;
 }
 
 int main(int argc, char* argv[]) {
@@ -50,21 +42,23 @@ int main(int argc, char* argv[]) {
 		parse(buf, myset);
 	}
 
-	cout << "size: " << myset.size() << endl;
-
 	// query input & parse
 	string userIn = "";
-	while (cin >> userIn) {
+	while (getline(cin, userIn)) {
+		// check if user enters "RETURN" key
+		if (userIn == "") break;
+
+		// make userIn lowercase
+		int len = userIn.length();
+		for (int i=0; i<len; i++) {
+			userIn[i] = tolower(userIn[i]);
+		}
+
 		if (myset.count(userIn) == 1) { // if userIn exists in set
 			cout << "in the file" << endl;
 		} else {
 			cout << "not in file" << endl;
 		}
 	}
-
-	// insert into set
-
-	// ... user interaction stuff ...
-
 	return 0;
 }

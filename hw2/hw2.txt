@@ -9,7 +9,7 @@ e) README.md is modified (and staged)
 
 Problem 3:
 a) O(n^2)
-b) O(n)
+b) O(n) NOOOOOO!!!!!!!!! ------------------------------------
 c) O(n^(3/2))
 
 Problem 4:
