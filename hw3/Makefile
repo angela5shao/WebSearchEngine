@@ -4,19 +4,24 @@ CPPFLAGS = -Wall -g
 BIN_DIR  = bin
 GTEST_LL = -I /usr/local/opt/gtest/include/ -l gtest -l gtest_main -pthread
 
+all: $(BIN_DIR)/alisttest $(BIN_DIR)/.dirstamp
+	./$(BIN_DIR)/alisttest
 # $^ is an auto variable that means "all dependencies",
-#   which are test.cpp and $(BIN_DIR)/fib.o in this case
 # IMPORTANT: $(GTEST_LL) needs to come *after* the source files
-$(BIN_DIR)/listTest: alisttest.cpp $(BIN_DIR)/alistint.o
+$(BIN_DIR)/alistint.o: alistint.h alistint.cpp $(BIN_DIR)/.dirstamp
+	$(CC) $(CPPFLAGS) -c alistint.cpp -o $(BIN_DIR)/alistint.o 
+
+$(BIN_DIR)/alisttest: alisttest.cpp $(BIN_DIR)/alistint.o 
 	$(CC) $(CPPFLAGS) $^ $(GTEST_LL) -o $@
 
-$(BIN_DIR)/alistint.o: alistint.h alistint.cpp
-	$(CC) $(CPPFLAGS) alistint.cpp -o $(BIN_DIR)/alistint.o
+$(BIN_DIR)/.dirstamp:
+	mkdir -p $(BIN_DIR)
+	touch $(BIN_DIR)/.dirstamp
 
-.PHONY: tests
+.PHONY: clean alisttest
 clean:
 	rm -rf $(BIN_DIR)
 
-tests: $(BIN_DIR)/listTest
-	-@$(BIN_DIR)/listTest
+tests: $(BIN_DIR)/alisttest
+	-@$(BIN_DIR)/alisttest
 	-@echo "--- All Tested!---"
