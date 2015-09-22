@@ -1,3 +1,4 @@
+// Run: g++ -g -Wall teststack.cpp stackin.cpp alistint.cpp -o teststack
 #include <iostream>
 #include "stackint.h"
 using namespace std;
