@@ -18,7 +18,6 @@ AListInt::AListInt(int cap) {
 
 AListInt::AListInt(const AListInt& other) {
 	if (this == &other) return; // if self assignment
-	// why &: compare addr of this object and addr of other object
 
 	// copy size, capacity, content
 	this->_size = other._size;
@@ -31,15 +30,16 @@ AListInt::AListInt(const AListInt& other) {
 
 AListInt& AListInt::operator=(const AListInt& other) {
 	if (this == &other) return *this; // why &: compare addr of this object and addr of other object
-	if (_data) {
+	if (!this->empty()) {
 		//for (unsigned int k=0; k<this->_size; k++) delete &_data[k];
-		for (unsigned int k=0; k<this->_size; k++) remove(k);
+		//for (unsigned int k=0; k<this->_size; k++) remove(k);
+		delete [] this->_data;
 	}
 
 	this->_size = other._size;
+	this->_data = new int[other._cap];
 	this->_cap = other._cap;
-	this->_data = new int[this->_size];
-	for (unsigned int i=0; i<this->_size; i++) {
+	for (unsigned int i=0; i<other._size; i++) {
 		this->_data[i] = other._data[i];
 	}
 	return *this;
@@ -62,46 +62,59 @@ bool AListInt::empty() const {
 }
 
 void AListInt::insert (int pos, const int& val) {
-	if (_size == _cap) { // if out of space (append)
+	if (_size == _cap) { // if out of space 
+		//cout << "    inserting: resize" << endl;
 		resize(); 
 	}
-	if ((pos > _size) || (pos < 0)) { // if out of bounds, do nothing
+	if ( (unsigned)pos > _cap || pos < 0) { // if out of bounds, do nothing
+		cout << "    inserting out of bounds" << endl;
 		return; 
 	}
 
-	if (empty()) {
-		_data[pos] = val;
+	_size++;
+	for (unsigned int i=_size-1; i>(unsigned)pos; i--) { // shift everything after pos back by one
+		if (_size == 1) {
+			cout << "    inserting to empty list" << endl;
+		}
+
+		cout << "   shift ["<<i<<"]=["<<i-1<<"]" << endl;
+		_data[i] = _data[i-1];
+	}
+	//cout << "   insert ["<<pos<<"]:" << val << endl;
+	_data[pos] = val;
+
+	/*if (empty()) {
+		//_data[pos] = val;
+		set(pos, val);
 	} else {
-		for (unsigned int i=_size-1; i>pos; i--) { // shift everything after pos back by one
+		for (unsigned int i=_size-1; i>(unsigned)pos; i--) { // shift everything after pos back by one
 			_data[i] = _data[i-1];
 		}
-	}
-	_data[pos] = val;
-	_size++;
+	}*/
 }
 
 void AListInt::remove (int pos) {
 	if (empty()) return; // if list is empty
-	if ((pos > _size-1) || (pos < 0)) return; // if out of bounds, do nothing
+	if ( (unsigned)pos > _size-1 || pos < 0) return; // if out of bounds, do nothing
 
-	for (unsigned int i=pos; i<_size; i++) { // shift everything after pos up by one
+	for (unsigned int i=pos; i<_size-1; i++) { // shift everything after pos up by one
 		_data[i] = _data[i+1];
 	}
 	_size--;
 }
 
 void AListInt::set (int position, const int& val) {
-	if ((position > _size-1) || (position < 0)) return; // if out of bounds
+	if (((unsigned)position > _size-1) || (position < 0)) return; // if out of bounds
 	_data[position] = val;
 }
 
 int& AListInt::get (int position) {
-	if ((position > _size-1) || (position < 0)) return _data[0]; // if out of bounds
+	if (((unsigned)position > _size-1) || (position < 0)) return _data[0]; // if out of bounds
 	return _data[position];
 }
 
 int const & AListInt::get (int position) const { // ????? same func???
-	if ((position > _size-1) || (position < 0)) return _data[0]; // if out of bounds
+	if (((unsigned)position > _size-1) || (position < 0)) return _data[0]; // if out of bounds
 	return _data[position];
 }
 
@@ -122,16 +135,27 @@ int const & AListInt::operator[](int position) const {
 }
 
 int& AListInt::operator[](int position) {
-	if ((position > _size-1) || (position < 0)) return _data[0]; // out of bounds
+	if ( (unsigned)position > _size-1 || position < 0) return _data[0]; // out of bounds
 	return _data[position];
 }
 
 void AListInt::resize() {
-	AListInt newList;
+	/*AListInt newList;
 	newList._data = new int[this->_cap * 2]; // double capacity
 	newList._size = this->_size; 
 	for (unsigned int i=0; i<this->_size; i++) { // maintain original data
 		newList._data[i] = this->_data[i];
 	}
-	*this = newList;
+
+	// delete original
+	delete [] this->_data;
+
+	*this = newList;*/
+	_cap *= 2;
+	int* newData = new int[_cap]; // double capacity
+	for (unsigned int i=0; i < _size; i++) { // maintain original data
+		newData[i] = _data[i];
+	}
+	delete [] _data;
+	_data = newData;
 }

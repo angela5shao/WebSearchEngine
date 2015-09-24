@@ -6,7 +6,9 @@ StackInt::StackInt() {
 
 }
 StackInt::~StackInt() {
-
+	while (!this->empty()) {
+		this->pop();
+	}
 }
 
 bool StackInt::empty() const {
@@ -23,6 +25,6 @@ int const &  StackInt::top() const {
 }
 
 void StackInt::pop() {
-	if (list_.size() == 0) cout << "Stack is empty" << endl; // if list is empty
+	if (list_.size() == 0) cout << "  Stack is empty" << endl; // if list is empty
 	list_.remove(list_.size()-1);
 }
