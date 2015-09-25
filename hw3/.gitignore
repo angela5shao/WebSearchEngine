@@ -1,0 +1,38 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+testlist
+teststack
+boolexpr_v1.cpp
+boolexpr_v2.cpp
+boolexpr_v3.cpp
+boolexpr_v4.cpp
+boolexpr
+bin/boolexpr
+bin/alisttest
