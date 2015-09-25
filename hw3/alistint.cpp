@@ -31,8 +31,6 @@ AListInt::AListInt(const AListInt& other) {
 AListInt& AListInt::operator=(const AListInt& other) {
 	if (this == &other) return *this; // why &: compare addr of this object and addr of other object
 	if (!this->empty()) {
-		//for (unsigned int k=0; k<this->_size; k++) delete &_data[k];
-		//for (unsigned int k=0; k<this->_size; k++) remove(k);
 		delete [] this->_data;
 	}
 
@@ -76,15 +74,6 @@ void AListInt::insert (int pos, const int& val) {
 		_data[i] = _data[i-1];
 	}
 	_data[pos] = val;
-
-	/*if (empty()) {
-		//_data[pos] = val;
-		set(pos, val);
-	} else {
-		for (unsigned int i=_size-1; i>(unsigned)pos; i--) { // shift everything after pos back by one
-			_data[i] = _data[i-1];
-		}
-	}*/
 }
 
 void AListInt::remove (int pos) {
@@ -134,17 +123,6 @@ int& AListInt::operator[](int position) {
 }
 
 void AListInt::resize() {
-	/*AListInt newList;
-	newList._data = new int[this->_cap * 2]; // double capacity
-	newList._size = this->_size; 
-	for (unsigned int i=0; i<this->_size; i++) { // maintain original data
-		newList._data[i] = this->_data[i];
-	}
-
-	// delete original
-	delete [] this->_data;
-
-	*this = newList;*/
 	_cap *= 2;
 	int* newData = new int[_cap]; // double capacity
 	for (unsigned int i=0; i < _size; i++) { // maintain original data
