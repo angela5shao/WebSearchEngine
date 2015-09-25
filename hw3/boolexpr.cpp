@@ -1,4 +1,7 @@
-// valgrind --leak-check=full --show-leak-kinds=all -v ./boolexpr
+/* valgrind --leak-check=full --show-leak-kinds=all -v ./boolexpr
+ g++ -g -Wall boolexpr.cpp stackint.cpp alistint.cpp -o boolexpr
+ ./boolexpr boolexpr.in boolexpr.vars
+*/
 #include "stackint.h"
 #include <iostream>
 #include <fstream>
@@ -52,11 +55,13 @@ int main(int argc, char* argv[]) {
 		cout << expr << endl;
 		int len = expr.length();
 
-		int b1;
+		int b1; // first number
 		int op;
 		bool hasB1 = false;
 		bool hasOp = false;
-		bool hasResult = false;
+		// variable for presence of T/F
+		bool andHasFalse = false;
+		bool orHasTrue = false;
 
 		for (int i=0; i<len; i++) {
 			char c = expr[i];
@@ -75,129 +80,178 @@ int main(int argc, char* argv[]) {
 				map<long int, bool>::iterator it;
 				it = varAssign.find(x);
 				if (it != varAssign.end()) {
-					//cout << "  number:" << it->first << " val:" << it->second << endl;
 					int toPush;
 					if (it->second) toPush = T;
 					else toPush = F;
 					mystack.push(toPush);
+					//cout << "  pushed: " << mystack.top() << endl;
 				}
 			}
 
 			// if open parenthesis or operators, push
 			else if (c == '(' || c == '&' || c == '|' || c == '~') {
 				if (c=='(') {
-					//cout << "  push: " << OPEN_PAREN << endl;
 					mystack.push(OPEN_PAREN);
 				} else if (c=='&') {
-					//cout << "  push: " << AND << endl;
 					mystack.push(AND);
 				} else if (c=='|') {
 					mystack.push(OR);
 				} else { // not
-					// retrieve last bool-number
-					int x = mystack.top();
-					mystack.pop();
-
-					if (x == T) { // pop from vector and add inverse
-						mystack.push(F);
-					} else { 
-						mystack.push(T);
-					}
+					mystack.push(NOT);					
 				}
+				//cout << "  pushed: " << mystack.top() << endl;
 			}
 
 			// else closing parenthesis, CALCULATE!
 			else if (c == ')') {
-				cout << "  .. reached ) and top=" << mystack.top() << endl;
-				
+				// read until '('
 				while (1) {
-					if (mystack.top() == OPEN_PAREN) {
-						cout << "  .. reached (  ";
+					int x = mystack.top();
+					cout << "  " << x;
+					mystack.pop();
+
+					if (x == OPEN_PAREN) {
+						cout << "  reached (  ";
+
+						// calculate
+						if (op == AND && andHasFalse) {
+							mystack.push(F);
+							cout << "  AND push F" << endl;
+						} else if (op == AND || (op == OR && orHasTrue)) {
+							mystack.push(T);
+							cout << "  AND/OR push T" << endl;
+						} else if (op == OR) {
+							mystack.push(F);
+							cout << "  OR push F" << endl;
+						}
+						// TEST
+						int x1 = mystack.top();
+						mystack.pop();
+						int x2 = mystack.top();
+						cout << "  at top:" << x1 << " then " << x2 << endl;
+						mystack.push(x1);
+
+						// reset
+						hasB1 = false;
+						hasOp = false;
+						andHasFalse = false;
+						orHasTrue = false;
 						break;
-					}
-					if (mystack.empty()) { // if no corresponding '('
-						cout << "Malformed: no matching (" << endl;
+
+					} else if (mystack.empty()) { // no matching '('
+						cout << "  no matching (" << endl;
 						break;
 					}
 
-					int x = mystack.top(); // which is after '('
-					cout << "  .. pop " << x;
-					/*if (!hasResult) */mystack.pop();
-
+					// if number
 					if (x == T || x == F) {
-						if (hasB1 && hasOp) { // if hasB1, calculate and push on vector
-							if ((toBool(x) && toBool(b1)) || (toBool(x) || toBool(b1))) {
-								mystack.push(T);
-								cout << "  .. push ANS: T (==" << mystack.top() <<")" << endl;
-							} else { 
-								mystack.push(F);
-								cout << "  .. push ANS: F (==" << mystack.top() <<")" << endl;
+						// if hasB1
+						if (hasB1) {
+							// check if it is NOTed
+							int maybeNOT = mystack.top();
+							bool isNOT = false;
+							if (maybeNOT == NOT) {
+								mystack.pop(); // pop NOT
+								isNOT = true;
 							}
-							hasResult = true; 
-							//cout << "  .. hasResult==1? " << hasResult << endl;
-							hasB1 = false;
 
-							// don't pop this result!!!!
-
-						} else if (hasB1 && !hasOp) { // hasB1 but !hasOp
-							cout << "Malformed: 2 num w/o operator" << endl;
-							break;
-						} else { // hasB1
-							cout << "  setting b1" << endl;
+							if (op == AND) { // if op = AND
+								if (x == F || (x==T && isNOT)) {
+									andHasFalse = true;
+								}
+							} else if (op == OR) { // else if op = OR
+								if (x == T || (x==F && isNOT)) {
+									orHasTrue = true;
+								}
+							} else { // else, no op, malformed (no op for number)
+								cout << "  MALFORMED: no op" << endl;
+								break;
+							}
+						} else { // store as b1
 							b1 = x;
 							hasB1 = true;
 						}
-					} else if (x == AND) { // an AND
+					} else if (x == AND) { // if AND
 						if (hasOp && op != AND) {
-							cout << "Malformed: inconsistent operator" << endl;
-							break;
-						} else if (!hasB1) {
-							cout << "Malformed: op without a variable" << endl;
+							cout << "  MALFORMED: inconsistent op" << endl;
 							break;
 						}
-						cout << "  setting op = AND" << endl;
+						cout << " (op=AND) ";
 						op = AND;
 						hasOp = true;
-					} else if (x == OR) { // an OR
+						if (b1 == F) andHasFalse = true;
+
+					} else if (x == OR) { // if OR
 						if (hasOp && op != OR) {
-							cout << "Malformed: inconsistent operator" << endl;
-							break;
-						} else if (!hasB1) {
-							cout << "Malformed: op without a variable" << endl;
+							cout << "  MALFORMED: inconsistent op" << endl;
 							break;
 						}
-						cout << "  setting op = OR" << endl;
+						cout << " (op=OR) ";;
 						op = OR;
 						hasOp = true;
-					} else {
-						cout << "  unrecognized int in miniExpr" << endl;
-						break;
-					}
-				} // end of mini expression 
+						if (b1 == T) orHasTrue = true;
 
-				cout << "  .. popped " << mystack.top() << ", which should be -1" << endl;
-				mystack.pop(); // pop '('
+					} else if (x == NOT) { // if NOT
+						// check if it is NOTed
+						int maybeNOT = mystack.top();
+						bool isNOT = false;
+						if (maybeNOT == NOT) {
+							mystack.pop(); // pop NOT
+							isNOT = true;
+						}
+
+						if (op == AND) { // if op = AND
+							if (x == F || (x==T && isNOT)) {
+								andHasFalse = true;
+							}
+						} else if (op == OR) { // else if op = OR
+							if (x == T || (x==F && isNOT)) {
+								orHasTrue = true;
+							}
+						}
+
+						/*// grab last int and push its inverse
+						int temp = mystack.top();
+						cout << "  inversing " << temp << endl;
+						mystack.pop();
+						if (temp == T) mystack.push(F);
+						else mystack.push(T);*/
+
+					} else { // blank or unrecognized, do nothing
+
+					}
+
+				}/*
 				
-				hasOp = false; 
-				hasB1 = false;
 			} 
 			
 			else {// else blank space or end of expression
 				// if what's left is '('
 			}
 			
-		} // finish pushing entire expression
-		
+		} // finish pushing entire 
+
+
+
+/*
 		int result = mystack.top();
 		mystack.pop();
 		if (result == T) cout << "TRUE" << endl;
 		else cout << "FALSE" << endl;
 
 		if (!mystack.empty()) { // if stack isn't empty, output Malformed
-			cout << "Malformed: something left still" << endl;
+			cout << "Malformed: " << mystack.top() << " left still" << endl;
 		}
-
+*/
 	} // end of while loop (input file)
+/*
+	cout << "STACK:  ";
+	while (!mystack.empty()) {
+		cout << mystack.top() << " ";
+		mystack.pop();
+	}
+	cout << endl;*/
+
 
 	return 0;
 }

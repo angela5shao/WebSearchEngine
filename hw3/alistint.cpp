@@ -63,7 +63,6 @@ bool AListInt::empty() const {
 
 void AListInt::insert (int pos, const int& val) {
 	if (_size == _cap) { // if out of space 
-		//cout << "    inserting: resize" << endl;
 		resize(); 
 	}
 	if ( (unsigned)pos > _cap || pos < 0) { // if out of bounds, do nothing
@@ -73,14 +72,9 @@ void AListInt::insert (int pos, const int& val) {
 
 	_size++;
 	for (unsigned int i=_size-1; i>(unsigned)pos; i--) { // shift everything after pos back by one
-		if (_size == 1) {
-			cout << "    inserting to empty list" << endl;
-		}
-
 		cout << "   shift ["<<i<<"]=["<<i-1<<"]" << endl;
 		_data[i] = _data[i-1];
 	}
-	//cout << "   insert ["<<pos<<"]:" << val << endl;
 	_data[pos] = val;
 
 	/*if (empty()) {

@@ -72,16 +72,19 @@ TEST_F(ArrayListTest, Insert) {
 	list2.insert(-1, 10); // out of bounds
 	EXPECT_EQ(list2.size(), 0);
 	list2.insert(1, 10); // out of bounds
-	EXPECT_EQ(list2.size(), 0);
-
-	list2.insert(0, 100);
 	EXPECT_EQ(list2.size(), 1);
 
+	list2.insert(0, 100);
+	EXPECT_EQ(list2.size(), 2);
+
+	list2.insert(6, 11); // out of bounds/cap
+	EXPECT_EQ(list2.size(), 2);
+
 	for (int i=1; i<5; i++) list2.insert(i, 100+i);
-	EXPECT_EQ(list2.size(), 5);
-	
-	list2.insert(5, 105); // resize
 	EXPECT_EQ(list2.size(), 6);
+	
+	list2.insert(5, 105); 
+	EXPECT_EQ(list2.size(), 7);
 }
 
 TEST_F(ArrayListTest, Remove) {
