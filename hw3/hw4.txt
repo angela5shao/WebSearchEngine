@@ -9,7 +9,8 @@ a) (n-1)th push is O(1), total O(n-1), average O(1)
 b) (n-1)th push is O(1), total O(n-1), average O(1)
 	nth push is O(n-1), total O(n-1 + n-1), average O(2n-2 / n-1) = O(2) = O(1)
 	...
-	
+	(n+sqrt(n)) push is O(n+sqrt(n)-1), total O(2n-2 + n+sqrt(n)-1), avergage O(3n+sqrt(n) / n+sqrt(n)) = O(3) = O(1)
+	answer: O(1)
 
 c) size=nth is O(1), total O(n), average O(1)
 	pop => size=(n-1)th is O(1), total O(n+1), average(1)
