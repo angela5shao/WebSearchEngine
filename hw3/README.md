@@ -1,6 +1,3 @@
-Name: Ann-Chie (Angela) Shao
-ID: 1816563875
-
 AListInt:
 make alisttest
 
