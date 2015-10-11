@@ -1,5 +1,4 @@
-# CS 104 Student Repository
+# CS 104 Class projects
 
-- **Name**: Tommy Trojan
+- **Projects**: Tommy Trojan
 - **USC ID**: 1234567890
-- **Email**: ttrojan@usc.edu
