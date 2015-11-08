@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # CS 104: Class Projects
 
 palindrome.cpp
@@ -24,3 +25,10 @@ sequencesearch.cpp
 	./sequencesearch input.txt output.txt
 
 	DESCRIPTION: Given a "grid" of floating point numbers, look for the longest strictly increasing sequence along a row or column (not diagonal), forward or backward, and output the longest length
+=======
+# CS 104 Class projects
+
+- **Hw1**: sequence search, palindrome, parser
+- **Hw2**: split a list using a linked list class
+- **Hw3**: boolean expression calculator using a stack class, which uses an integer list class
+>>>>>>> ca4300d95e69575750e33fb973b71459aead9b28

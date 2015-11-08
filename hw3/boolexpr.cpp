@@ -37,7 +37,6 @@ int main(int argc, char* argv[]) {
 		if (boolVal == 'T') numVal = true;
 		else numVal = false;
 		varAssign.insert(pair<int, bool>(num, numVal));
-		//cout << "num: " << num << " val: " << numVal << endl;
 	}
 
 	// declare variables
@@ -52,7 +51,6 @@ int main(int argc, char* argv[]) {
 
 	// read in and process expressions
 	while (getline(boolExpr, expr)) {
-		//cout << expr << endl;
 		int len = expr.length();
 
 		int b1; // first number
@@ -84,7 +82,6 @@ int main(int argc, char* argv[]) {
 					if (it->second) toPush = T;
 					else toPush = F;
 					mystack.push(toPush);
-					//cout << "  pushed: " << mystack.top() << endl;
 				}
 			}
 
@@ -99,36 +96,24 @@ int main(int argc, char* argv[]) {
 				} else { // not
 					mystack.push(NOT);					
 				}
-				//cout << "  pushed: " << mystack.top() << endl;
 			}
 
-			// else closing parenthesis, CALCULATE!
+			// else closing parenthesis, calculate
 			else if (c == ')') {
 				// read until '('
 				while (1) {
 					int x = mystack.top();
-					//cout << "  " << x;
 					mystack.pop();
 
 					if (x == OPEN_PAREN) {
-						//cout << "  reached (  ";
 						// calculate
 						if (op == AND && andHasFalse) {
 							mystack.push(F);
-							//cout << "  AND push F" << endl;
 						} else if (op == AND || (op == OR && orHasTrue)) {
 							mystack.push(T);
-							//cout << "  AND/OR push T" << endl;
 						} else if (op == OR) {
 							mystack.push(F);
-							//cout << "  OR push F" << endl;
 						}
-						// TEST
-						int x1 = mystack.top();
-						mystack.pop();
-						int x2 = mystack.top();
-						//cout << "  at top:" << x1 << " then " << x2 << endl;
-						mystack.push(x1);
 
 						// reset
 						hasB1 = false;
@@ -138,7 +123,7 @@ int main(int argc, char* argv[]) {
 						break;
 
 					} else if (mystack.empty()) { // no matching '('
-						//cout << "  no matching (" << endl;
+						cout << "MALFORMED" << endl;
 						break;
 					}
 
@@ -163,7 +148,7 @@ int main(int argc, char* argv[]) {
 									orHasTrue = true;
 								}
 							} else { // else, no op, malformed (no op for number)
-								//cout << "  MALFORMED: no op" << endl;
+								cout << "  MALFORMED: no op" << endl;
 								break;
 							}
 						} else { // store as b1
@@ -172,20 +157,18 @@ int main(int argc, char* argv[]) {
 						}
 					} else if (x == AND) { // if AND
 						if (hasOp && op != AND) {
-							//cout << "  MALFORMED: inconsistent op" << endl;
+							cout << "  MALFORMED: inconsistent op" << endl;
 							break;
 						}
-						//cout << " (op=AND) ";
 						op = AND;
 						hasOp = true;
 						if (b1 == F) andHasFalse = true;
 
 					} else if (x == OR) { // if OR
 						if (hasOp && op != OR) {
-							//cout << "  MALFORMED: inconsistent op" << endl;
+							cout << "  MALFORMED: inconsistent op" << endl;
 							break;
 						}
-						//cout << " (op=OR) ";;
 						op = OR;
 						hasOp = true;
 						if (b1 == T) orHasTrue = true;
@@ -218,13 +201,13 @@ int main(int argc, char* argv[]) {
 			} 
 			
 			else {// else blank space or end of expression
-				// if what's left is '('
+				// do nothing
 			}
 			
 		} // finish pushing entire 
 
 		if (!mystack.empty()) { // if stack isn't empty, output Malformed
-			//cout << "Malformed: " << mystack.top() << " left still" << endl;
+			cout << "Malformed: " << mystack.top() << " left still" << endl;
 		}
 
 	} // end of while loop (input file)
