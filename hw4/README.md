@@ -1,4 +1,2 @@
-Name: Ann-Chie Shao
-ID: 1816563875
-
+Created a WebPage class, a parser, and a search engine
 Compile: make
