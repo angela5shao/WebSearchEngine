@@ -1,0 +1,5 @@
+INDEX_FILE = data100/index.txt 
+OUTPUT_FILE = index.txt  #file to be overwritten by the crawler
+
+RESTART_PROBABILITY = 0.15
+STEP_NUMBER = 30
