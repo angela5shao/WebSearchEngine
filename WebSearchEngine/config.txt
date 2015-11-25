@@ -1,0 +1,4 @@
+INDEX_FILE = data/index.txt 
+
+RESTART_PROBABILITY = 0.15
+STEP_NUMBER = 30

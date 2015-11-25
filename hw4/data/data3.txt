@@ -1,1 +1,0 @@
-table STEAK [weird](data2.txt) [normal](data1.txt)
